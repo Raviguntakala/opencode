@@ -1,0 +1,190 @@
+{
+  "$schema": "./schema.json",
+
+  "autoupdate": "notify",
+
+  "disabled_providers": ["opencode"],
+
+  "plugin": ["@buildwise-ai/telemetry-plugin@latest"],
+
+  "share": "disabled",
+
+  "small_model": "github-copilot-enterprise/claude-haiku-4.5",
+
+  "permission": {
+    "edit": "ask",
+    "bash": {
+      "*": "ask",
+      "rm -rf *": "deny",
+      "rm -rf /*": "deny",
+      "sudo *": "ask",
+      "dd if=* of=/dev/*": "deny",
+      "mkfs.* /dev/*": "deny",
+      ":(){ :|:& };:": "deny"
+    },
+    "webfetch": "ask"
+  },
+  "provider": {
+    "amazon-bedrock": {
+      "options": {
+        "baseURL": "{env:ANTHROPIC_BEDROCK_BASE_URL}",
+        "region": "nexus"
+      },
+      "models": {
+        "nexus-claude-opus-4.6": {
+          "id": "claude-opus-4.6",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text", "image"]
+          },
+          "cost": {
+            "input": 5.0,
+            "output": 25.0,
+            "cache_read": 0.5,
+            "cache_write": 6.25,
+            "context_over_200k": {
+              "input": 10.0,
+              "output": 50.0,
+              "cache_read": 1.0,
+              "cache_write": 12.5
+            }
+          }
+        },
+        "nexus-claude-sonnet-4.5": {
+          "id": "claude-sonnet-4.5",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text", "image"]
+          },
+          "cost": {
+            "input": 3.0,
+            "output": 15.0,
+            "cache_read": 0.3,
+            "cache_write": 3.75,
+            "context_over_200k": {
+              "input": 6.0,
+              "output": 22.5,
+              "cache_read": 0.6,
+              "cache_write": 7.5
+            }
+          }
+        },
+        "nexus-claude-sonnet-4": {
+          "id": "claude-sonnet-4",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text", "image"]
+          },
+          "cost": {
+            "input": 3.0,
+            "output": 15.0,
+            "cache_read": 0.3,
+            "cache_write": 3.75
+          }
+        },
+        "nexus-claude-opus-4": {
+          "id": "claude-opus-4",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text", "image"]
+          },
+          "cost": {
+            "input": 15.0,
+            "output": 75.0,
+            "cache_read": 1.5,
+            "cache_write": 18.75
+          }
+        }
+      }
+    },
+    "google": {
+      "options": {
+        "baseURL": "{env:ANTHROPIC_BEDROCK_BASE_URL}/v1",
+        "apiKey": "{env:AWS_BEARER_TOKEN_BEDROCK}"
+      },
+      "models": {
+        "nexus-gemini-3-pro": {
+          "id": "gemini-3-pro-preview",
+          "cost": {
+            "input": 2.0,
+            "output": 12.0,
+            "cache_read": 0.2,
+            "context_over_200k": {
+              "input": 4.0,
+              "output": 18.0,
+              "cache_read": 0.4
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "mcp": {
+    "sql": {
+      "type": "local",
+      "command": ["npx", "-y", "@buildwise-ai/mssql-mcp-server@latest"],
+      "environment": {
+        "SQL_SERVER_NAME": "{env:SQL_SERVER_NAME}",
+        "SQL_SERVER_PORT": "{env:SQL_SERVER_PORT}",
+        "SQL_USER": "{env:SQL_USER}",
+        "SQL_PASSWORD": "{env:SQL_PASSWORD}",
+        "DATABASE_NAME": "{env:DATABASE_NAME}",
+        "TRUST_SERVER_CERTIFICATE": "true",
+        "CONNECTION_TIMEOUT": "60",
+        "READONLY": "true"
+      },
+      "enabled": false
+    },
+    "jira": {
+      "type": "local",
+      "command": ["npx", "-y", "@buildwise-ai/jira-datacenter-mcp@latest"],
+      "environment": {
+        "JIRA_HOST": "{env:JIRA_HOST}",
+        "JIRA_USERNAME": "{env:JIRA_USERNAME}",
+        "JIRA_API_TOKEN": "{env:JIRA_API_TOKEN}"
+      },
+      "enabled": false
+    },
+    "launchdarkly": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "--package",
+        "@launchdarkly/mcp-server",
+        "--",
+        "mcp",
+        "start",
+        "--api-key",
+        "{env:LD_API_KEY}"
+      ],
+      "enabled": false
+    },
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
+      "enabled": false
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "enabled": false
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "grep_app": {
+      "type": "remote",
+      "url": "https://mcp.grep.app",
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,5 @@
+# published-versions.json
+.github-release*
+
+# Rebrand/revert backups
+.backups/

@@ -1,0 +1,23 @@
+{
+  "customVersion": "1.0.18",
+  "originalVersion": "1.2.15",
+  "lastPublishedOriginalVersion": "1.2.10",
+  "publishedAt": "2026-03-02T09:38:49.666Z",
+  "packages": [
+    {
+      "name": "@buildwise-ai/starcode",
+      "originalName": "opencode",
+      "path": "packages/opencode"
+    },
+    {
+      "name": "@buildwise-ai/sdk",
+      "originalName": "@opencode-ai/sdk",
+      "path": "packages/sdk/js"
+    },
+    {
+      "name": "@buildwise-ai/plugin",
+      "originalName": "@opencode-ai/plugin",
+      "path": "packages/plugin"
+    }
+  ]
+}
